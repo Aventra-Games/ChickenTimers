@@ -1,0 +1,98 @@
+classDiagram
+    direction LR
+
+    class TimerMode {
+      <<enum>>
+      +CountUp
+      +CountDown
+    }
+
+    class TimerState {
+      <<enum>>
+      +Idle
+      +Running
+      +Paused
+      +Completed
+      +Canceled
+    }
+
+    class TimerOptions {
+      +TimeSpan? StartTime
+      +TimeSpan? EndTime
+      +TimeSpan? Duration
+      +bool PlayOnStart
+      +TimeSpan TickInterval
+      +double TimeScale
+      +bool Loop
+      +bool AutoTick
+      +TimerMode? Mode
+      +SynchronizationContext? EventContext
+    }
+
+    class TimerEventArgs {
+      +TimeSpan Current
+      +TimeSpan Elapsed
+      +TimeSpan Remaining
+      +double Progress
+      +object? Owner
+      +TimerState State
+      +bool IsLooping
+    }
+
+    class SmartTimer {
+      -WeakReference~object~ _owner
+      -System.Timers.Timer? _timer
+      -Stopwatch _stopwatch
+      -TimeSpan _start
+      -TimeSpan _end
+      -TimeSpan _current
+      -TimeSpan _duration
+      -int _direction
+      -double _timeScale
+      -bool _loop
+      -TimerState _state
+      -SynchronizationContext? _eventContext
+
+      +Owner: object?
+      +Mode: TimerMode
+      +State: TimerState
+      +Current: TimeSpan
+      +Remaining: TimeSpan
+      +Elapsed: TimeSpan
+      +Duration: TimeSpan
+      +Progress: double
+      +IsRunning: bool
+
+      +SmartTimer(TimerOptions, object? owner)
+      +SmartTimer(TimeSpan start, TimeSpan end, bool playOnStart=false, ...)
+      +static CreateCountDown(TimeSpan duration, bool playOnStart=false, ...): SmartTimer
+      +static CreateCountUp(TimeSpan duration, bool playOnStart=false, ...): SmartTimer
+
+      +Start(): SmartTimer
+      +Pause(): SmartTimer
+      +Resume(): SmartTimer
+      +Restart(): SmartTimer
+      +Reset(): SmartTimer
+      +Cancel(): SmartTimer
+      +Advance(TimeSpan dt): void
+      +SetTime(TimeSpan t, bool clamp=true): SmartTimer
+      +BindOwner(object owner): SmartTimer
+      +SetTimeScale(double scale): SmartTimer
+      +EnableLoop(bool loop): SmartTimer
+
+      +event Started(TimerEventArgs)
+      +event Paused(TimerEventArgs)
+      +event Resumed(TimerEventArgs)
+      +event Tick(TimerEventArgs)
+      +event Completed(TimerEventArgs)
+      +event ResetEvent(TimerEventArgs)
+      +event Canceled(TimerEventArgs)
+
+      +OnStarted(Action~SmartTimer,TimerEventArgs~): SmartTimer
+      +OnPaused(Action~SmartTimer,TimerEventArgs~): SmartTimer
+      +OnResumed(Action~SmartTimer,TimerEventArgs~): SmartTimer
+      +OnTick(Action~SmartTimer,TimerEventArgs~): SmartTimer
+      +OnCompleted(Action~SmartTimer,TimerEventArgs~): SmartTimer
+      +OnReset(Action~SmartTimer,TimerEventArgs~): SmartTimer
+      +OnCanceled(Action~SmartTimer,TimerEventArgs~): SmartTimer
+    }
