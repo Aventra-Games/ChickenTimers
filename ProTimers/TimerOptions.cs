@@ -1,4 +1,4 @@
-﻿namespace Aventra.Nugget.ProTimers
+﻿namespace Aventra.Nugget.ChickenTimers
 {
     /// <summary>
     /// Olusturmayi kolaylastiran secenekler kumesi.

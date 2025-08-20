@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Timers;
 
-namespace Aventra.Nugget.ProTimers
+namespace Aventra.Nugget.ChickenTimers
 {
     public sealed class SmartTimer : IDisposable
     {
