@@ -1,15 +1,17 @@
-﻿namespace Aventra.Nugget.ChickenTimers
+﻿using System;
+
+namespace Aventra.Nugget.Utility.ChickenTimers
 {
     public sealed class TimerEventArgs : EventArgs
     {
-        public required TimeSpan Current { get; init; }
-        public required TimeSpan Elapsed { get; init; }
-        public required TimeSpan Remaning { get; init; }
+        public TimeSpan Current { get; set; }
+        public TimeSpan Elapsed { get; set; }
+        public TimeSpan Remaning { get; set; }
         /// <summary>Ilerleme [0..1], anlamliysa.</summary
-        public required double Progress { get; init; }
-        public object? Owner { get; init; }
-        public required TimerState State { get; init; }
+        public double Progress { get; set; }
+        public object? Owner { get; set; }
+        public  TimerState State { get; set; }
         /// <summary>Bu event bir loop donusunde mi ateslendi?</summary>
-        public bool IsLooping { get; init; }
+        public bool IsLooping { get; set; }
     }
 }

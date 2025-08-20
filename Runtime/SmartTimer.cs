@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Timers;
 
-namespace Aventra.Nugget.ChickenTimers
+namespace Aventra.Nugget.Utility.ChickenTimers
 {
     public sealed class SmartTimer : IDisposable
     {
